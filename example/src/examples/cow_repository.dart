@@ -132,7 +132,7 @@ class _RemoteMetadataCache {
           var c = new Completer<Set<PackageVersion>>();
 
           _versions.putIfAbsent(package, () => new Set());
-          remote.versions(package).toList().then((versions) {
+          remote.versions(package).toList().cast<Map<dynamic, dynamic>>().then((versions) {
             _versions[package].addAll(versions);
             c.complete(_versions[package]);
           });
