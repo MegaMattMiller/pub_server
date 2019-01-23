@@ -52,7 +52,7 @@ class HttpProxyRepository extends PackageRepository {
         .where((v) => v.packageName == package && v.versionString == version)
         .toList()
         .then((List<PackageVersion> versions) {
-      if (versions.length >= 1) return versions.first;
+      if (versions.isNotEmpty) return versions.first;
       return null;
     });
   }
