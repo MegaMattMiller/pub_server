@@ -130,10 +130,13 @@ class _RemoteMetadataCache {
     return _versionCompleters
         .putIfAbsent(package, () {
           var c = new Completer<Set<PackageVersion>>();
-          //type 'List<dynamic>' is not a subtype of type 'List<Map<dynamic, dynamic>>' in type cast example\src\examples\cow_repository.dart 135:18 
+          //type 'List<dynamic>' is not a subtype of type 'List<Map<dynamic, dynamic>>' in type cast example\src\examples\cow_repository.dart 135:18
           _versions.putIfAbsent(package, () => new Set());
-          remote.versions(package).toList()
-          .then((List<PackageVersion> versions) {
+          remote
+              .versions(package)
+              .where((v) => v != null)
+              .toList()
+              .then((versions) {
             _versions[package].addAll(versions);
             c.complete(_versions[package]);
           });
